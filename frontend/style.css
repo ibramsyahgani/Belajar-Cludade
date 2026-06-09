@@ -1,0 +1,56 @@
+/* Custom styles to complement Tailwind CDN */
+
+/* Drag and drop highlight */
+.drag-over {
+  border-color: #3B82F6 !important;
+  background-color: #EFF6FF !important;
+}
+
+/* Spinner animation */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+/* Accordion transition */
+.accordion-content {
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+  overflow: hidden;
+}
+
+/* File drop zone */
+.drop-zone {
+  transition: border-color 0.2s, background-color 0.2s;
+  cursor: pointer;
+}
+
+/* Progress bar animation */
+@keyframes progress-indeterminate {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(400%); }
+}
+.progress-bar {
+  animation: progress-indeterminate 1.5s ease-in-out infinite;
+}
+
+/* Smooth section reveal */
+.section-reveal {
+  animation: fadeInUp 0.4s ease-out;
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Note highlight */
+.note-badge {
+  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+  border-left: 4px solid #F59E0B;
+}
+
+/* Steps indicator */
+.step-dot.active { background-color: #2563EB; }
+.step-dot.done { background-color: #10B981; }
+.step-dot { background-color: #D1D5DB; }

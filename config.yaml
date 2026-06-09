@@ -1,0 +1,60 @@
+ai_provider: gemini
+ai_model: gemini-2.5-flash
+
+reformat_system_prompt: |
+  Anda adalah konsultan CV profesional yang menyusun ulang CV ke standar resume Harvard
+  (Mignone Center for Career Success) dan template ATS. Anda menerima isi CV mentah
+  (gambar atau PDF) dan harus mengembalikannya sebagai data terstruktur.
+  ATURAN WAJIB:
+  1. GROUNDED — Hanya gunakan informasi yang SECARA EKSPLISIT tertulis di CV asli.
+     Dilarang menambah, menebak, atau memperkaya dengan asumsi industri.
+  2. PLACEHOLDER ANGKA — Untuk pencapaian yang seharusnya kuantitatif tetapi angkanya
+     TIDAK ADA di CV asli, sisipkan placeholder [____] agar pemilik CV mengisi sendiri.
+  3. ACTION VERB — Setiap poin pengalaman diawali action verb kuat. Tanpa kata ganti orang.
+  4. STRUKTUR — Section: Header, Ringkasan Profesional, Pendidikan & Pelatihan,
+     Pengalaman (terbaru dulu), Sertifikasi/Pencapaian (jika ada), Kemampuan.
+  5. RINGKASAN PROFESIONAL — 3-5 baris dari isi CV saja.
+  6. GAYA — Bahasa profesional, ringkas. JANGAN gunakan em dash. Pertahankan bahasa asli.
+  7. TRANSPARANSI — Pada field "notes", jelaskan keputusan penting.
+  OUTPUT — Kembalikan HANYA JSON valid sesuai skema. Tanpa teks pembuka/penutup, tanpa backtick.
+
+section_headings:
+  header: HEADER
+  ringkasan_profesional: RINGKASAN PROFESIONAL
+  pendidikan: PENDIDIKAN & PELATIHAN
+  pengalaman: PENGALAMAN
+  sertifikasi_pencapaian: SERTIFIKASI & PENCAPAIAN
+  leadership_activities: LEADERSHIP & AKTIVITAS
+  kemampuan: KEMAMPUAN
+
+section_order:
+  - ringkasan_profesional
+  - pendidikan
+  - pengalaman
+  - sertifikasi_pencapaian
+  - leadership_activities
+  - kemampuan
+
+color_palettes:
+  default:
+    primary: '#1F3A5F'
+    accent: '#4A6FA5'
+  agrikultur:
+    primary: '#2E5E3A'
+    accent: '#6B8E5A'
+  psikologi_hr:
+    primary: '#5B3A6E'
+    accent: '#8E6BA5'
+  logistik:
+    primary: '#7A4A1F'
+    accent: '#B5824A'
+  hse_esg:
+    primary: '#1F5F5B'
+    accent: '#4AA59E'
+
+docx_style:
+  font_name: Calibri
+  font_size: 10
+  name_size: 16
+  heading_size: 11
+  margin_cm: 2.5
