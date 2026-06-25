@@ -1,12 +1,10 @@
 import os
 import re
-import json
 import base64
-import tempfile
 from datetime import datetime
 from pathlib import Path
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
-from fastapi.responses import FileResponse, HTMLResponse, Response
+from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from .ai_service import process_cv_with_gemini
@@ -27,6 +25,8 @@ app.include_router(admin_router)
 ALLOWED_MIME = {"image/jpeg", "image/png", "application/pdf"}
 MAX_SIZE = 10 * 1024 * 1024  # 10MB
 
+FRONTEND = Path(__file__).parent.parent / "frontend"
+
 
 @app.get("/health")
 async def health():
@@ -39,14 +39,12 @@ async def process_cv(
     email: str = Form(...),
     file: UploadFile = File(...)
 ):
-    # Validate MIME type
     if file.content_type not in ALLOWED_MIME:
         raise HTTPException(400, "Format file tidak didukung. Gunakan JPG, PNG, atau PDF.")
 
     file_bytes = await file.read()
     if len(file_bytes) > MAX_SIZE:
         raise HTTPException(400, "Ukuran file terlalu besar. Maksimum 10MB.")
-
     if len(file_bytes) < 1000:
         raise HTTPException(400, "File terlalu kecil atau kosong.")
 
@@ -65,8 +63,7 @@ async def process_cv(
         raise HTTPException(500, f"Gagal membuat dokumen: {str(e)}")
 
     safe_name = re.sub(r'[^\w\s-]', '', name).strip().replace(' ', '_')
-    date_str = datetime.now().strftime("%Y%m%d")
-    filename = f"CV_{safe_name}_{date_str}.docx"
+    filename = f"CV_{safe_name}_{datetime.now().strftime('%Y%m%d')}.docx"
 
     return {
         "status": "ok",
@@ -77,15 +74,27 @@ async def process_cv(
     }
 
 
-# Serve frontend
-frontend_path = Path(__file__).parent.parent / "frontend"
-if frontend_path.exists():
-    app.mount("/static", StaticFiles(directory=str(frontend_path)), name="static")
+def _serve_html(filename: str) -> HTMLResponse:
+    """Read HTML and inline the CSS so no separate static request is needed."""
+    html_path = FRONTEND / filename
+    css_path = FRONTEND / "style.css"
+    if not html_path.exists():
+        return HTMLResponse("<h1>Not found</h1>", status_code=404)
+    html = html_path.read_text(encoding="utf-8")
+    if css_path.exists():
+        css = css_path.read_text(encoding="utf-8")
+        html = html.replace(
+            '<link rel="stylesheet" href="/static/style.css" />',
+            f"<style>\n{css}\n</style>"
+        )
+    return HTMLResponse(html)
 
-    @app.get("/")
-    async def serve_index():
-        return FileResponse(str(frontend_path / "index.html"))
 
-    @app.get("/admin-panel")
-    async def serve_admin():
-        return FileResponse(str(frontend_path / "admin.html"))
+@app.get("/")
+async def serve_index():
+    return _serve_html("index.html")
+
+
+@app.get("/admin-panel")
+async def serve_admin():
+    return _serve_html("admin.html")
