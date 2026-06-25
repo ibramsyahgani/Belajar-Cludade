@@ -3,224 +3,252 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CV Harvard Auto-Formatter</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>CV Formatter Pro — Format CV ke Standar Harvard & ATS</title>
   <link rel="stylesheet" href="/static/style.css" />
-  <style>
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-  </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body>
 
-  <!-- Privacy Banner -->
-  <div class="bg-blue-700 text-white text-sm px-4 py-2 text-center">
-    <span class="font-semibold">&#128274; Privasi Anda terlindungi:</span>
-    File CV Anda diproses langsung di server dan tidak disimpan setelah pemrosesan selesai.
+  <!-- ── HERO HEADER ── -->
+  <div class="hero-bg text-white">
+    <div style="max-width:700px;margin:0 auto;padding:2rem 1.25rem 2.5rem;">
+      <!-- Privacy badge -->
+      <div style="display:flex;justify-content:center;margin-bottom:1.5rem;">
+        <span style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:.35rem .9rem;font-size:.75rem;font-weight:500;letter-spacing:.02em;">
+          🔒 File tidak disimpan &bull; Diproses real-time &bull; Privasi terjaga
+        </span>
+      </div>
+      <!-- Title -->
+      <h1 style="font-size:1.875rem;font-weight:700;text-align:center;margin-bottom:.6rem;line-height:1.2;">
+        CV Formatter Pro
+      </h1>
+      <p style="text-align:center;color:rgba(255,255,255,.8);font-size:.95rem;margin-bottom:2rem;">
+        Upload CV Anda — AI kami reformatnya ke standar <strong>Harvard</strong> &amp; <strong>ATS</strong> dalam hitungan detik
+      </p>
+
+      <!-- ── STEP INDICATOR ── -->
+      <div style="display:flex;align-items:center;gap:0;max-width:380px;margin:0 auto;" id="stepIndicator">
+        <!-- Step 1 -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:80px;">
+          <div class="step-circle active" id="sc1">1</div>
+          <span style="font-size:.7rem;color:rgba(255,255,255,.75);font-weight:500;" id="sl1">Identitas</span>
+        </div>
+        <div class="step-line" id="line1" style="margin-bottom:18px;"></div>
+        <!-- Step 2 -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:80px;">
+          <div class="step-circle" id="sc2">2</div>
+          <span style="font-size:.7rem;color:rgba(255,255,255,.75);font-weight:500;" id="sl2">Upload CV</span>
+        </div>
+        <div class="step-line" id="line2" style="margin-bottom:18px;"></div>
+        <!-- Step 3 -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:80px;">
+          <div class="step-circle" id="sc3">3</div>
+          <span style="font-size:.7rem;color:rgba(255,255,255,.75);font-weight:500;" id="sl3">Hasil</span>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- Header -->
-  <header class="bg-white shadow-sm border-b border-gray-200">
-    <div class="max-w-3xl mx-auto px-4 py-5 flex items-center gap-3">
-      <div class="w-10 h-10 bg-blue-700 rounded-lg flex items-center justify-center text-white font-bold text-lg">H</div>
-      <div>
-        <h1 class="text-xl font-bold text-gray-900">CV Harvard Auto-Formatter</h1>
-        <p class="text-xs text-gray-500">Reformatting CV ke standar Harvard/ATS &bull; Unduh .docx siap pakai</p>
-      </div>
-    </div>
-  </header>
-
-  <main class="max-w-3xl mx-auto px-4 py-8">
-
-    <!-- Steps Indicator -->
-    <div class="flex items-center justify-center gap-2 mb-8" id="stepsIndicator">
-      <div class="flex items-center gap-2">
-        <div class="step-dot w-3 h-3 rounded-full active" id="dot1"></div>
-        <span class="text-xs text-gray-500" id="label1">Identitas</span>
-      </div>
-      <div class="h-px w-8 bg-gray-300"></div>
-      <div class="flex items-center gap-2">
-        <div class="step-dot w-3 h-3 rounded-full" id="dot2"></div>
-        <span class="text-xs text-gray-500" id="label2">Upload CV</span>
-      </div>
-      <div class="h-px w-8 bg-gray-300"></div>
-      <div class="flex items-center gap-2">
-        <div class="step-dot w-3 h-3 rounded-full" id="dot3"></div>
-        <span class="text-xs text-gray-500" id="label3">Hasil</span>
-      </div>
-    </div>
+  <!-- ── MAIN CONTENT ── -->
+  <main style="max-width:700px;margin:0 auto;padding:0 1.25rem 4rem;">
 
     <!-- FORM CARD -->
-    <div class="bg-white rounded-2xl shadow-md p-6 mb-6" id="formCard">
-      <h2 class="text-lg font-semibold text-gray-800 mb-1">Format Ulang CV Anda</h2>
-      <p class="text-sm text-gray-500 mb-5">Isi nama, email, lalu upload file CV (JPG/PNG/PDF, maks. 10MB).</p>
+    <div id="formCard" class="glass-card fade-up" style="border-radius:20px;padding:2rem;margin-top:-1.25rem;box-shadow:0 8px 40px rgba(0,0,0,.10);">
 
-      <form id="cvForm" novalidate>
-        <!-- Name -->
-        <div class="mb-4">
-          <label class="block text-sm font-medium text-gray-700 mb-1" for="inputName">Nama Lengkap <span class="text-red-500">*</span></label>
-          <input
-            type="text" id="inputName" name="name" required
-            placeholder="Contoh: Budi Santoso"
-            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-          <p class="text-xs text-red-500 mt-1 hidden" id="nameError">Nama tidak boleh kosong.</p>
-        </div>
+      <!-- Section: Identitas -->
+      <div style="margin-bottom:1.75rem;">
+        <h2 style="font-size:1.05rem;font-weight:700;color:#1E293B;margin-bottom:.25rem;">Informasi Diri</h2>
+        <p style="font-size:.82rem;color:#64748B;margin-bottom:1.25rem;">Kami butuh nama dan email untuk header CV Anda.</p>
 
-        <!-- Email -->
-        <div class="mb-4">
-          <label class="block text-sm font-medium text-gray-700 mb-1" for="inputEmail">Email <span class="text-red-500">*</span></label>
-          <input
-            type="email" id="inputEmail" name="email" required
-            placeholder="Contoh: budi@email.com"
-            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-          <p class="text-xs text-red-500 mt-1 hidden" id="emailError">Email tidak valid.</p>
-        </div>
-
-        <!-- File Upload -->
-        <div class="mb-5">
-          <label class="block text-sm font-medium text-gray-700 mb-1">File CV <span class="text-red-500">*</span></label>
-          <div
-            id="dropZone"
-            class="drop-zone border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-blue-400 hover:bg-blue-50 transition-colors"
-            onclick="document.getElementById('fileInput').click()"
-            ondragover="handleDragOver(event)"
-            ondragleave="handleDragLeave(event)"
-            ondrop="handleDrop(event)"
-          >
-            <div id="dropZoneContent">
-              <svg class="mx-auto mb-3 w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
-              </svg>
-              <p class="text-sm text-gray-600 font-medium">Klik atau seret file ke sini</p>
-              <p class="text-xs text-gray-400 mt-1">JPG, PNG, atau PDF &bull; Maks. 10MB</p>
-            </div>
-            <div id="fileSelected" class="hidden items-center justify-center gap-3">
-              <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-              <div class="text-left">
-                <p class="text-sm font-semibold text-gray-800" id="selectedFileName">file.pdf</p>
-                <p class="text-xs text-gray-500" id="selectedFileSize">0 KB</p>
-              </div>
-              <button type="button" onclick="clearFile(event)" class="ml-2 text-gray-400 hover:text-red-500 transition-colors">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
-              </button>
-            </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;" class="two-col">
+          <div>
+            <label style="display:block;font-size:.8rem;font-weight:600;color:#374151;margin-bottom:.4rem;" for="inputName">
+              Nama Lengkap <span style="color:#EF4444;">*</span>
+            </label>
+            <input type="text" id="inputName" placeholder="Budi Santoso" class="field-input" />
+            <p class="err-msg" id="nameError" style="color:#EF4444;font-size:.75rem;margin-top:.3rem;display:none;">Nama tidak boleh kosong.</p>
           </div>
-          <input type="file" id="fileInput" name="file" accept=".jpg,.jpeg,.png,.pdf" class="hidden" onchange="handleFileSelect(event)" />
-          <p class="text-xs text-red-500 mt-1 hidden" id="fileError">Pilih file CV terlebih dahulu.</p>
+          <div>
+            <label style="display:block;font-size:.8rem;font-weight:600;color:#374151;margin-bottom:.4rem;" for="inputEmail">
+              Email <span style="color:#EF4444;">*</span>
+            </label>
+            <input type="email" id="inputEmail" placeholder="budi@email.com" class="field-input" />
+            <p class="err-msg" id="emailError" style="color:#EF4444;font-size:.75rem;margin-top:.3rem;display:none;">Email tidak valid.</p>
+          </div>
         </div>
+      </div>
 
-        <!-- Submit -->
-        <button
-          type="submit" id="submitBtn"
-          class="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 px-6 rounded-lg transition-colors text-sm flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+      <!-- Divider -->
+      <div style="height:1px;background:#F1F5F9;margin-bottom:1.75rem;"></div>
+
+      <!-- Section: Upload -->
+      <div style="margin-bottom:1.75rem;">
+        <h2 style="font-size:1.05rem;font-weight:700;color:#1E293B;margin-bottom:.25rem;">Upload File CV</h2>
+        <p style="font-size:.82rem;color:#64748B;margin-bottom:1.25rem;">Format: JPG, PNG, atau PDF &bull; Maks. 10MB</p>
+
+        <div
+          id="dropZone"
+          class="drop-zone"
+          onclick="document.getElementById('fileInput').click()"
+          ondragover="handleDragOver(event)"
+          ondragleave="handleDragLeave(event)"
+          ondrop="handleDrop(event)"
         >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-          </svg>
-          Format Ulang CV Saya
-        </button>
-      </form>
+          <!-- Empty state -->
+          <div id="dzEmpty">
+            <div style="width:56px;height:56px;background:#EFF6FF;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">
+              <svg width="28" height="28" fill="none" stroke="#3B82F6" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
+              </svg>
+            </div>
+            <p style="font-size:.9rem;font-weight:600;color:#334155;margin-bottom:.3rem;">Seret file ke sini atau klik untuk memilih</p>
+            <p style="font-size:.78rem;color:#94A3B8;">JPG &bull; PNG &bull; PDF &bull; Maks. 10MB</p>
+          </div>
+          <!-- File selected state -->
+          <div id="dzSelected" style="display:none;align-items:center;gap:1rem;justify-content:center;">
+            <div style="width:44px;height:44px;background:#ECFDF5;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="22" height="22" fill="none" stroke="#10B981" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <div style="text-align:left;">
+              <p style="font-size:.875rem;font-weight:600;color:#1E293B;" id="dzFileName">file.pdf</p>
+              <p style="font-size:.75rem;color:#64748B;" id="dzFileSize">0 KB</p>
+            </div>
+            <button type="button" onclick="clearFile(event)" style="background:none;border:none;cursor:pointer;color:#CBD5E1;padding:.25rem;" title="Hapus file">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.pdf" style="display:none;" onchange="handleFileSelect(event)" />
+        <p id="fileError" style="color:#EF4444;font-size:.75rem;margin-top:.4rem;display:none;">Pilih file CV terlebih dahulu.</p>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="button" id="submitBtn" class="btn-primary" style="width:100%;display:flex;align-items:center;justify-content:center;gap:.6rem;" onclick="handleSubmit()">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/>
+        </svg>
+        Format Ulang CV Saya dengan AI
+      </button>
+
+      <!-- Features row -->
+      <div style="display:flex;gap:1.5rem;justify-content:center;margin-top:1.25rem;flex-wrap:wrap;">
+        <span style="display:flex;align-items:center;gap:.35rem;font-size:.73rem;color:#94A3B8;">
+          <svg width="14" height="14" fill="none" stroke="#10B981" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          Format Harvard/ATS
+        </span>
+        <span style="display:flex;align-items:center;gap:.35rem;font-size:.73rem;color:#94A3B8;">
+          <svg width="14" height="14" fill="none" stroke="#10B981" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          Output .docx siap kirim
+        </span>
+        <span style="display:flex;align-items:center;gap:.35rem;font-size:.73rem;color:#94A3B8;">
+          <svg width="14" height="14" fill="none" stroke="#10B981" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          Powered by Google Gemini
+        </span>
+      </div>
     </div>
 
-    <!-- Loading State -->
-    <div id="loadingCard" class="hidden bg-white rounded-2xl shadow-md p-8 mb-6 text-center">
-      <div class="flex flex-col items-center gap-4">
-        <div class="relative w-16 h-16">
-          <div class="absolute inset-0 border-4 border-blue-100 rounded-full"></div>
-          <div class="absolute inset-0 border-4 border-blue-600 border-t-transparent rounded-full spinner"></div>
+    <!-- ── LOADING CARD ── -->
+    <div id="loadingCard" style="display:none;" class="fade-up">
+      <div class="glass-card" style="border-radius:20px;padding:2.5rem 2rem;margin-top:-1.25rem;box-shadow:0 8px 40px rgba(0,0,0,.10);text-align:center;">
+        <!-- Animated icon -->
+        <div style="width:72px;height:72px;margin:0 auto 1.5rem;position:relative;">
+          <div style="position:absolute;inset:0;border:3px solid #DBEAFE;border-radius:50%;"></div>
+          <div class="spinner" style="position:absolute;inset:0;border:3px solid transparent;border-top-color:#2563EB;border-radius:50%;"></div>
+          <div style="position:absolute;inset:10px;background:#EFF6FF;border-radius:50%;display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" fill="none" stroke="#2563EB" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/>
+            </svg>
+          </div>
         </div>
-        <div>
-          <h3 class="text-base font-semibold text-gray-800">Memproses CV Anda...</h3>
-          <p class="text-sm text-gray-500 mt-1" id="loadingStatus">Membaca dan menganalisis CV dengan AI...</p>
-        </div>
+        <h3 style="font-size:1.1rem;font-weight:700;color:#1E293B;margin-bottom:.4rem;">AI Sedang Bekerja...</h3>
+        <p id="loadingStatus" style="font-size:.875rem;color:#64748B;margin-bottom:1.5rem;">Membaca dan menganalisis CV Anda...</p>
         <!-- Progress bar -->
-        <div class="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
-          <div class="h-full bg-blue-500 rounded-full progress-bar w-1/3"></div>
+        <div style="background:#F1F5F9;border-radius:999px;height:6px;overflow:hidden;position:relative;max-width:300px;margin:0 auto 1rem;">
+          <div style="position:absolute;inset:0;background:linear-gradient(90deg,#BFDBFE,#3B82F6,#BFDBFE);background-size:200% 100%;animation:shimmer 1.6s ease-in-out infinite;border-radius:999px;"></div>
         </div>
-        <p class="text-xs text-gray-400">Proses ini membutuhkan 10-30 detik. Mohon tunggu.</p>
+        <p style="font-size:.75rem;color:#94A3B8;">Proses memerlukan 15–30 detik. Mohon tunggu.</p>
       </div>
     </div>
 
-    <!-- Error State -->
-    <div id="errorCard" class="hidden bg-red-50 border border-red-200 rounded-2xl p-5 mb-6">
-      <div class="flex gap-3">
-        <svg class="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-        </svg>
+    <!-- ── ERROR CARD ── -->
+    <div id="errorCard" style="display:none;" class="fade-up">
+      <div style="background:#FFF5F5;border:1.5px solid #FECACA;border-radius:16px;padding:1.25rem 1.5rem;margin-top:1rem;display:flex;gap:.875rem;align-items:flex-start;">
+        <div style="width:36px;height:36px;background:#FEE2E2;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="18" height="18" fill="none" stroke="#DC2626" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
+          </svg>
+        </div>
         <div>
-          <h3 class="text-sm font-semibold text-red-800">Terjadi Kesalahan</h3>
-          <p class="text-sm text-red-700 mt-1" id="errorMessage">Gagal memproses CV.</p>
-          <button onclick="resetForm()" class="mt-3 text-sm text-red-600 underline hover:text-red-800">Coba lagi</button>
+          <p style="font-size:.9rem;font-weight:600;color:#991B1B;margin-bottom:.25rem;">Terjadi Kesalahan</p>
+          <p id="errorMessage" style="font-size:.82rem;color:#B91C1C;"></p>
+          <button onclick="resetToForm()" style="margin-top:.75rem;font-size:.8rem;color:#1D4ED8;background:none;border:none;cursor:pointer;text-decoration:underline;padding:0;">
+            ← Coba lagi
+          </button>
         </div>
       </div>
     </div>
 
-    <!-- Results Panel -->
-    <div id="resultsCard" class="hidden section-reveal">
+    <!-- ── RESULTS CARD ── -->
+    <div id="resultsCard" style="display:none;" class="fade-up">
 
-      <!-- Success Banner -->
-      <div class="bg-green-50 border border-green-200 rounded-2xl p-4 mb-4 flex items-center gap-3">
-        <svg class="w-6 h-6 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-        </svg>
-        <div class="flex-1">
-          <p class="text-sm font-semibold text-green-800">CV berhasil diformat ulang!</p>
-          <p class="text-xs text-green-600">Pratinjau di bawah. Unduh file .docx siap kirim.</p>
+      <!-- Success banner -->
+      <div style="background:linear-gradient(135deg,#ECFDF5,#D1FAE5);border:1.5px solid #A7F3D0;border-radius:16px;padding:1.25rem 1.5rem;margin-top:-1rem;display:flex;align-items:center;gap:1rem;box-shadow:0 4px 20px rgba(16,185,129,.1);">
+        <div style="width:44px;height:44px;background:#10B981;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="22" height="22" fill="none" stroke="#fff" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+          </svg>
         </div>
-        <button
-          id="downloadBtn"
-          onclick="downloadDocx()"
-          class="bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors flex items-center gap-2 flex-shrink-0"
-        >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+        <div style="flex:1;">
+          <p style="font-size:.95rem;font-weight:700;color:#065F46;">CV Berhasil Diformat! 🎉</p>
+          <p style="font-size:.8rem;color:#047857;margin-top:.1rem;">Pratinjau tersedia di bawah. Unduh file .docx siap kirim.</p>
+        </div>
+        <button class="btn-success" onclick="downloadDocx()" style="display:flex;align-items:center;gap:.5rem;">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/>
           </svg>
           Unduh .docx
         </button>
       </div>
 
-      <!-- Notes for user -->
-      <div id="notesCard" class="hidden note-badge rounded-xl p-4 mb-4">
-        <div class="flex gap-2">
-          <svg class="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      <!-- AI Notes -->
+      <div id="notesCard" style="display:none;margin-top:1rem;">
+        <div class="note-card" style="padding:1rem 1.25rem;display:flex;gap:.75rem;">
+          <svg width="18" height="18" fill="none" stroke="#D97706" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"/>
           </svg>
           <div>
-            <p class="text-sm font-semibold text-amber-800 mb-1">Catatan dari AI Formatter:</p>
-            <p class="text-sm text-amber-700" id="notesText"></p>
+            <p style="font-size:.8rem;font-weight:700;color:#92400E;margin-bottom:.3rem;">Catatan dari AI Formatter</p>
+            <p id="notesText" style="font-size:.8rem;color:#B45309;line-height:1.55;"></p>
           </div>
         </div>
       </div>
 
-      <!-- Preview Accordion -->
-      <div class="bg-white rounded-2xl shadow-md overflow-hidden mb-4">
-        <div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
-          <h2 class="font-semibold text-gray-800 text-sm">Pratinjau CV Terformat</h2>
-          <button onclick="toggleAllSections()" class="text-xs text-blue-600 hover:text-blue-800">Buka Semua</button>
+      <!-- Preview Panel -->
+      <div class="glass-card" style="border-radius:20px;margin-top:1rem;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.07);">
+        <div style="padding:1rem 1.5rem;border-bottom:1px solid #F1F5F9;display:flex;align-items:center;justify-content:space-between;">
+          <div style="display:flex;align-items:center;gap:.6rem;">
+            <div style="width:8px;height:8px;background:#10B981;border-radius:50%;"></div>
+            <span style="font-size:.875rem;font-weight:700;color:#1E293B;">Pratinjau CV Terformat</span>
+          </div>
+          <button onclick="toggleAllSections()" id="toggleAllBtn" style="font-size:.75rem;color:#3B82F6;background:none;border:none;cursor:pointer;font-weight:500;">
+            Buka Semua
+          </button>
         </div>
-        <div id="previewContainer" class="divide-y divide-gray-100"></div>
+        <div id="previewContainer"></div>
       </div>
 
-      <!-- Bottom download -->
-      <div class="flex flex-col sm:flex-row gap-3">
-        <button
-          onclick="downloadDocx()"
-          class="flex-1 bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 px-6 rounded-lg transition-colors text-sm flex items-center justify-center gap-2"
-        >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+      <!-- Bottom actions -->
+      <div style="display:flex;gap:.75rem;margin-top:1rem;flex-wrap:wrap;">
+        <button class="btn-primary" onclick="downloadDocx()" style="flex:1;display:flex;align-items:center;justify-content:center;gap:.6rem;min-width:180px;">
+          <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/>
           </svg>
           Unduh CV Harvard (.docx)
         </button>
-        <button
-          onclick="resetForm()"
-          class="flex-1 border border-gray-300 hover:border-gray-400 text-gray-700 font-medium py-3 px-6 rounded-lg transition-colors text-sm"
-        >
+        <button class="btn-outline" onclick="resetToForm()" style="flex:1;min-width:140px;">
           Format CV Lain
         </button>
       </div>
@@ -228,364 +256,335 @@
 
   </main>
 
-  <footer class="text-center text-xs text-gray-400 py-8">
-    CV Harvard Auto-Formatter &bull; Powered by Google Gemini &bull;
-    <a href="/admin-panel" class="hover:text-gray-600 underline">Admin</a>
+  <!-- Footer -->
+  <footer style="text-align:center;padding:2rem 1rem;font-size:.75rem;color:#94A3B8;border-top:1px solid #E2E8F0;">
+    CV Formatter Pro &bull; Powered by Google Gemini AI &bull;
+    <a href="/admin-panel" style="color:#CBD5E1;text-decoration:underline;">Admin</a>
   </footer>
+
+  <style>
+    @keyframes shimmer {
+      0%   { background-position: -200% center; }
+      100% { background-position:  200% center; }
+    }
+    @media (max-width: 520px) {
+      .two-col { grid-template-columns: 1fr !important; }
+    }
+    * { box-sizing: border-box; }
+  </style>
 
   <script>
     let currentDocxB64 = null;
     let currentFilename = null;
-    let allSectionsOpen = false;
+    let allOpen = false;
 
-    // ─── Drag & Drop ───────────────────────────────────────────────
+    // ── Steps ──────────────────────────────────────────────────────
+    function setStep(n) {
+      [1,2,3].forEach(i => {
+        const sc = document.getElementById('sc' + i);
+        sc.className = 'step-circle';
+        if (i < n) sc.classList.add('done'), sc.innerHTML = '✓';
+        else if (i === n) sc.classList.add('active'), sc.innerHTML = String(i);
+        else sc.innerHTML = String(i);
+      });
+      [1,2].forEach(i => {
+        const ln = document.getElementById('line' + i);
+        ln.className = 'step-line' + (i < n ? ' done' : '');
+      });
+    }
+
+    // ── Drag & Drop ───────────────────────────────────────────────
     function handleDragOver(e) {
       e.preventDefault();
       document.getElementById('dropZone').classList.add('drag-over');
     }
-    function handleDragLeave(e) {
+    function handleDragLeave() {
       document.getElementById('dropZone').classList.remove('drag-over');
     }
     function handleDrop(e) {
       e.preventDefault();
       document.getElementById('dropZone').classList.remove('drag-over');
-      const files = e.dataTransfer.files;
-      if (files.length > 0) setFile(files[0]);
+      if (e.dataTransfer.files.length) setFile(e.dataTransfer.files[0]);
     }
     function handleFileSelect(e) {
-      if (e.target.files.length > 0) setFile(e.target.files[0]);
+      if (e.target.files.length) setFile(e.target.files[0]);
     }
     function setFile(file) {
-      const allowed = ['image/jpeg', 'image/png', 'application/pdf'];
+      const allowed = ['image/jpeg','image/png','application/pdf'];
       if (!allowed.includes(file.type)) {
-        showFieldError('fileError', 'Format tidak didukung. Gunakan JPG, PNG, atau PDF.');
-        return;
+        showErr('fileError','Format tidak didukung. Gunakan JPG, PNG, atau PDF.'); return;
       }
       if (file.size > 10 * 1024 * 1024) {
-        showFieldError('fileError', 'Ukuran file melebihi 10MB.');
-        return;
+        showErr('fileError','Ukuran file melebihi 10MB.'); return;
       }
-      hideFieldError('fileError');
-
-      // Update DataTransfer so form submit can access it
+      hideErr('fileError');
       const dt = new DataTransfer();
       dt.items.add(file);
       document.getElementById('fileInput').files = dt.files;
-
-      document.getElementById('selectedFileName').textContent = file.name;
-      document.getElementById('selectedFileSize').textContent = formatBytes(file.size);
-      document.getElementById('dropZoneContent').classList.add('hidden');
-      document.getElementById('fileSelected').classList.remove('hidden');
-      document.getElementById('fileSelected').classList.add('flex');
+      document.getElementById('dzFileName').textContent = file.name;
+      document.getElementById('dzFileSize').textContent = fmtBytes(file.size);
+      document.getElementById('dzEmpty').style.display = 'none';
+      document.getElementById('dzSelected').style.display = 'flex';
     }
     function clearFile(e) {
       e.stopPropagation();
       document.getElementById('fileInput').value = '';
-      document.getElementById('dropZoneContent').classList.remove('hidden');
-      document.getElementById('fileSelected').classList.add('hidden');
-      document.getElementById('fileSelected').classList.remove('flex');
+      document.getElementById('dzEmpty').style.display = '';
+      document.getElementById('dzSelected').style.display = 'none';
     }
-    function formatBytes(bytes) {
-      if (bytes < 1024) return bytes + ' B';
-      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-      return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    function fmtBytes(b) {
+      if (b < 1024) return b + ' B';
+      if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+      return (b/1048576).toFixed(1) + ' MB';
     }
 
-    // ─── Form Validation ──────────────────────────────────────────
-    function showFieldError(id, msg) {
+    // ── Validation helpers ─────────────────────────────────────────
+    function showErr(id, msg) {
       const el = document.getElementById(id);
-      el.textContent = msg;
-      el.classList.remove('hidden');
+      el.textContent = msg; el.style.display = '';
     }
-    function hideFieldError(id) {
-      document.getElementById(id).classList.add('hidden');
-    }
+    function hideErr(id) { document.getElementById(id).style.display = 'none'; }
 
-    // ─── Steps ────────────────────────────────────────────────────
-    function setStep(step) {
-      ['dot1','dot2','dot3'].forEach((id, i) => {
-        const el = document.getElementById(id);
-        el.className = 'step-dot w-3 h-3 rounded-full';
-        if (i + 1 < step) el.classList.add('done');
-        else if (i + 1 === step) el.classList.add('active');
-      });
-    }
-
-    // ─── Form Submit ──────────────────────────────────────────────
-    document.getElementById('cvForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      let valid = true;
-
-      const name = document.getElementById('inputName').value.trim();
+    // ── Submit ─────────────────────────────────────────────────────
+    async function handleSubmit() {
+      const name  = document.getElementById('inputName').value.trim();
       const email = document.getElementById('inputEmail').value.trim();
-      const fileInput = document.getElementById('fileInput');
+      const fi    = document.getElementById('fileInput');
+      let ok = true;
 
-      if (!name) { showFieldError('nameError', 'Nama tidak boleh kosong.'); valid = false; }
-      else hideFieldError('nameError');
-
-      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        showFieldError('emailError', 'Email tidak valid.'); valid = false;
-      } else hideFieldError('emailError');
-
-      if (!fileInput.files || fileInput.files.length === 0) {
-        showFieldError('fileError', 'Pilih file CV terlebih dahulu.'); valid = false;
-      } else hideFieldError('fileError');
-
-      if (!valid) return;
+      if (!name)  { showErr('nameError','Nama tidak boleh kosong.');     ok=false; } else hideErr('nameError');
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+                  { showErr('emailError','Email tidak valid.');           ok=false; } else hideErr('emailError');
+      if (!fi.files || !fi.files.length)
+                  { showErr('fileError','Pilih file CV terlebih dahulu.'); ok=false; } else hideErr('fileError');
+      if (!ok) return;
 
       setStep(2);
-      showLoading();
+      show('loadingCard'); hide('formCard'); hide('errorCard'); hide('resultsCard');
 
-      const formData = new FormData();
-      formData.append('name', name);
-      formData.append('email', email);
-      formData.append('file', fileInput.files[0]);
+      const msgs = [
+        'Membaca dan menganalisis CV Anda...',
+        'Mengidentifikasi pengalaman & pendidikan...',
+        'Menyusun ulang ke format Harvard/ATS...',
+        'Membuat dokumen .docx...'
+      ];
+      let mi = 0;
+      const iv = setInterval(() => {
+        mi = (mi+1) % msgs.length;
+        document.getElementById('loadingStatus').textContent = msgs[mi];
+      }, 4500);
 
       try {
-        const statusMessages = [
-          'Membaca dan menganalisis CV dengan AI...',
-          'Mengidentifikasi pengalaman dan pendidikan...',
-          'Menyusun ulang ke format Harvard/ATS...',
-          'Membuat dokumen .docx...'
-        ];
-        let msgIdx = 0;
-        const msgInterval = setInterval(() => {
-          msgIdx = (msgIdx + 1) % statusMessages.length;
-          document.getElementById('loadingStatus').textContent = statusMessages[msgIdx];
-        }, 4000);
+        const fd = new FormData();
+        fd.append('name', name);
+        fd.append('email', email);
+        fd.append('file', fi.files[0]);
 
-        const response = await fetch('/api/process', {
-          method: 'POST',
-          body: formData
-        });
+        const res  = await fetch('/api/process', { method:'POST', body:fd });
+        clearInterval(iv);
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || 'Gagal memproses CV.');
 
-        clearInterval(msgInterval);
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.detail || 'Gagal memproses CV.');
-        }
-
-        currentDocxB64 = data.docx_b64;
+        currentDocxB64  = data.docx_b64;
         currentFilename = data.filename;
-
         setStep(3);
         showResults(data);
-
-      } catch (err) {
-        showError(err.message || 'Terjadi kesalahan jaringan.');
+      } catch(err) {
+        clearInterval(iv);
+        hide('loadingCard'); show('formCard');
+        document.getElementById('errorMessage').textContent = err.message || 'Terjadi kesalahan jaringan.';
+        show('errorCard');
         setStep(1);
       }
-    });
+    }
 
-    // ─── UI States ────────────────────────────────────────────────
-    function showLoading() {
-      document.getElementById('formCard').classList.add('hidden');
-      document.getElementById('loadingCard').classList.remove('hidden');
-      document.getElementById('errorCard').classList.add('hidden');
-      document.getElementById('resultsCard').classList.add('hidden');
-    }
-    function showError(msg) {
-      document.getElementById('loadingCard').classList.add('hidden');
-      document.getElementById('formCard').classList.remove('hidden');
-      document.getElementById('errorCard').classList.remove('hidden');
-      document.getElementById('errorMessage').textContent = msg;
-    }
+    // ── UI helpers ─────────────────────────────────────────────────
+    function show(id) { document.getElementById(id).style.display = ''; }
+    function hide(id) { document.getElementById(id).style.display = 'none'; }
+
     function showResults(data) {
-      document.getElementById('loadingCard').classList.add('hidden');
-      document.getElementById('formCard').classList.add('hidden');
-      document.getElementById('errorCard').classList.add('hidden');
-      document.getElementById('resultsCard').classList.remove('hidden');
-
-      // Notes
+      hide('loadingCard'); hide('formCard'); hide('errorCard');
+      const rc = document.getElementById('resultsCard');
+      rc.style.display = '';
       if (data.notes) {
         document.getElementById('notesText').textContent = data.notes;
-        document.getElementById('notesCard').classList.remove('hidden');
+        show('notesCard');
       }
-
       renderPreview(data.preview);
+      window.scrollTo({ top: 0, behavior:'smooth' });
     }
-    function resetForm() {
-      currentDocxB64 = null;
-      currentFilename = null;
-      document.getElementById('cvForm').reset();
-      clearFile({ stopPropagation: () => {} });
-      document.getElementById('resultsCard').classList.add('hidden');
-      document.getElementById('errorCard').classList.add('hidden');
-      document.getElementById('loadingCard').classList.add('hidden');
-      document.getElementById('formCard').classList.remove('hidden');
+
+    function resetToForm() {
+      currentDocxB64 = null; currentFilename = null;
+      document.getElementById('inputName').value = '';
+      document.getElementById('inputEmail').value = '';
+      clearFile({ stopPropagation:()=>{} });
+      ['nameError','emailError','fileError','notesCard'].forEach(hide);
+      hide('resultsCard'); hide('errorCard'); hide('loadingCard');
       document.getElementById('previewContainer').innerHTML = '';
+      show('formCard');
       setStep(1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top:0, behavior:'smooth' });
     }
 
-    // ─── Preview Render ───────────────────────────────────────────
+    // ── Preview Render ──────────────────────────────────────────────
     function renderPreview(cv) {
-      const container = document.getElementById('previewContainer');
-      container.innerHTML = '';
-
+      const box = document.getElementById('previewContainer');
+      box.innerHTML = '';
       const sections = [];
 
       // Header
       const h = cv.header || {};
-      const headerLines = [
-        h.nama ? `<span class="font-bold text-base text-gray-900">${esc(h.nama)}</span>` : '',
-        [h.lokasi, h.email, h.telepon, h.linkedin_atau_portfolio].filter(Boolean).map(esc).join(' &bull; ')
-      ].filter(Boolean);
-      if (headerLines.length) {
-        sections.push({ title: 'Header', html: `<div class="text-center">${headerLines.join('<br>')}</div>` });
+      if (h.nama) {
+        const meta = [h.lokasi, h.email, h.telepon, h.linkedin_atau_portfolio].filter(Boolean).map(esc).join(' · ');
+        sections.push({ title:'Header', icon:'👤', html:`
+          <div style="text-align:center;padding:.5rem 0;">
+            <p style="font-size:1.1rem;font-weight:700;color:#1E293B;">${esc(h.nama)}</p>
+            ${meta ? `<p style="font-size:.8rem;color:#64748B;margin-top:.3rem;">${meta}</p>` : ''}
+          </div>
+        `});
       }
 
       // Ringkasan
       if (cv.ringkasan_profesional) {
-        sections.push({ title: 'Ringkasan Profesional', html: `<p class="text-sm text-gray-700 leading-relaxed">${esc(cv.ringkasan_profesional)}</p>` });
+        sections.push({ title:'Ringkasan Profesional', icon:'📝', html:`
+          <p style="font-size:.82rem;color:#374151;line-height:1.65;">${esc(cv.ringkasan_profesional)}</p>
+        `});
       }
 
       // Pendidikan
-      if (cv.pendidikan && cv.pendidikan.length) {
+      if (cv.pendidikan?.length) {
         let html = '';
         cv.pendidikan.forEach(edu => {
-          html += `<div class="mb-3">
-            <div class="flex justify-between items-start flex-wrap gap-1">
-              <span class="font-semibold text-sm text-gray-800">${esc(edu.institusi)}</span>
-              <span class="text-xs text-gray-500">${esc(edu.periode)}</span>
+          html += `<div style="margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid #F8FAFC;">
+            <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:.25rem;">
+              <span style="font-size:.875rem;font-weight:600;color:#1E293B;">${esc(edu.institusi)}</span>
+              <span style="font-size:.75rem;color:#94A3B8;">${esc(edu.periode)}</span>
             </div>
-            <p class="text-sm text-gray-600 italic">${esc(edu.jurusan_gelar)}${edu.lokasi ? ' &bull; ' + esc(edu.lokasi) : ''}</p>
-            ${edu.ipk ? `<p class="text-xs text-gray-500">IPK: ${esc(edu.ipk)}</p>` : ''}
-            ${edu.skripsi ? `<p class="text-xs text-gray-500 italic">Skripsi: ${esc(edu.skripsi)}</p>` : ''}
-            ${edu.pelatihan && edu.pelatihan.length ? '<ul class="mt-1 space-y-0.5">' + edu.pelatihan.filter(Boolean).map(p => `<li class="text-xs text-gray-600 flex gap-1"><span class="text-blue-400 mt-0.5">&#8226;</span>${esc(p)}</li>`).join('') + '</ul>' : ''}
+            <p style="font-size:.8rem;color:#64748B;font-style:italic;margin-top:.2rem;">${esc(edu.jurusan_gelar)}${edu.lokasi?' · '+esc(edu.lokasi):''}</p>
+            ${edu.ipk?`<span class="badge-field" style="margin-top:.3rem;display:inline-block;">IPK ${esc(edu.ipk)}</span>`:''}
+            ${edu.skripsi?`<p style="font-size:.75rem;color:#64748B;margin-top:.3rem;font-style:italic;">Skripsi: ${esc(edu.skripsi)}</p>`:''}
+            ${edu.pelatihan?.filter(Boolean).length?'<ul style="margin-top:.4rem;">'+edu.pelatihan.filter(Boolean).map(p=>`<li style="font-size:.78rem;color:#475569;display:flex;gap:.4rem;margin-top:.2rem;"><span style="color:#3B82F6;flex-shrink:0;">•</span>${esc(p)}</li>`).join('')+'</ul>'  :''}
           </div>`;
         });
-        sections.push({ title: 'Pendidikan & Pelatihan', html });
+        sections.push({ title:'Pendidikan & Pelatihan', icon:'🎓', html });
       }
 
       // Pengalaman
-      if (cv.pengalaman && cv.pengalaman.length) {
+      if (cv.pengalaman?.length) {
         let html = '';
         cv.pengalaman.forEach(exp => {
-          html += `<div class="mb-3">
-            <div class="flex justify-between items-start flex-wrap gap-1">
-              <span class="font-semibold text-sm text-gray-800">${esc(exp.organisasi)}</span>
-              <span class="text-xs text-gray-500">${esc(exp.periode)}</span>
+          html += `<div style="margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid #F8FAFC;">
+            <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:.25rem;">
+              <span style="font-size:.875rem;font-weight:600;color:#1E293B;">${esc(exp.organisasi)}</span>
+              <span style="font-size:.75rem;color:#94A3B8;">${esc(exp.periode)}</span>
             </div>
-            <p class="text-sm text-gray-600 italic">${esc(exp.posisi)}${exp.lokasi ? ' &bull; ' + esc(exp.lokasi) : ''}</p>
-            ${exp.poin && exp.poin.length ? '<ul class="mt-1.5 space-y-1">' + exp.poin.filter(Boolean).map(p => `<li class="text-xs text-gray-700 flex gap-1.5"><span class="text-blue-400 mt-0.5 flex-shrink-0">&#8226;</span><span>${esc(p)}</span></li>`).join('') + '</ul>' : ''}
+            <p style="font-size:.8rem;color:#2563EB;font-weight:500;margin-top:.2rem;">${esc(exp.posisi)}${exp.lokasi?' · <span style="color:#64748B;font-weight:400;">'+esc(exp.lokasi)+'</span>':''}</p>
+            ${exp.poin?.filter(Boolean).length?'<ul style="margin-top:.5rem;">'+exp.poin.filter(Boolean).map(p=>`<li style="font-size:.78rem;color:#374151;display:flex;gap:.5rem;margin-top:.3rem;"><span style="color:#3B82F6;flex-shrink:0;margin-top:1px;">•</span><span>${esc(p)}</span></li>`).join('')+'</ul>'  :''}
           </div>`;
         });
-        sections.push({ title: 'Pengalaman', html });
+        sections.push({ title:'Pengalaman', icon:'💼', html });
       }
 
       // Sertifikasi
-      if (cv.sertifikasi_pencapaian && cv.sertifikasi_pencapaian.length) {
-        const items = cv.sertifikasi_pencapaian.filter(Boolean);
-        if (items.length) {
-          sections.push({
-            title: 'Sertifikasi & Pencapaian',
-            html: `<ul class="space-y-1">${items.map(i => `<li class="text-xs text-gray-700 flex gap-1.5"><span class="text-blue-400 mt-0.5 flex-shrink-0">&#8226;</span><span>${esc(i)}</span></li>`).join('')}</ul>`
-          });
-        }
+      const sert = cv.sertifikasi_pencapaian?.filter(Boolean);
+      if (sert?.length) {
+        sections.push({ title:'Sertifikasi & Pencapaian', icon:'🏆', html:`
+          <ul>${sert.map(s=>`<li style="font-size:.8rem;color:#374151;display:flex;gap:.5rem;margin-bottom:.35rem;"><span style="color:#F59E0B;flex-shrink:0;">★</span><span>${esc(s)}</span></li>`).join('')}</ul>
+        `});
       }
 
       // Leadership
-      if (cv.leadership_activities && cv.leadership_activities.length) {
+      if (cv.leadership_activities?.length) {
         let html = '';
         cv.leadership_activities.forEach(act => {
-          html += `<div class="mb-3">
-            <div class="flex justify-between items-start flex-wrap gap-1">
-              <span class="font-semibold text-sm text-gray-800">${esc(act.organisasi)}</span>
-              <span class="text-xs text-gray-500">${esc(act.periode)}</span>
+          html += `<div style="margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid #F8FAFC;">
+            <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:.25rem;">
+              <span style="font-size:.875rem;font-weight:600;color:#1E293B;">${esc(act.organisasi)}</span>
+              <span style="font-size:.75rem;color:#94A3B8;">${esc(act.periode)}</span>
             </div>
-            <p class="text-sm text-gray-600 italic">${esc(act.peran)}${act.lokasi ? ' &bull; ' + esc(act.lokasi) : ''}</p>
-            ${act.poin && act.poin.length ? '<ul class="mt-1.5 space-y-1">' + act.poin.filter(Boolean).map(p => `<li class="text-xs text-gray-700 flex gap-1.5"><span class="text-blue-400 mt-0.5 flex-shrink-0">&#8226;</span><span>${esc(p)}</span></li>`).join('') + '</ul>' : ''}
+            <p style="font-size:.8rem;color:#7C3AED;font-weight:500;margin-top:.2rem;">${esc(act.peran)}${act.lokasi?' · <span style="color:#64748B;font-weight:400;">'+esc(act.lokasi)+'</span>':''}</p>
+            ${act.poin?.filter(Boolean).length?'<ul style="margin-top:.5rem;">'+act.poin.filter(Boolean).map(p=>`<li style="font-size:.78rem;color:#374151;display:flex;gap:.5rem;margin-top:.3rem;"><span style="color:#7C3AED;flex-shrink:0;margin-top:1px;">•</span><span>${esc(p)}</span></li>`).join('')+'</ul>'  :''}
           </div>`;
         });
-        sections.push({ title: 'Leadership & Aktivitas', html });
+        sections.push({ title:'Leadership & Aktivitas', icon:'🌟', html });
       }
 
       // Kemampuan
       if (cv.kemampuan) {
         const k = cv.kemampuan;
         let html = '';
-        if (k.hard_skills && k.hard_skills.length)
-          html += `<p class="text-sm text-gray-700 mb-1"><span class="font-semibold">Hard Skills:</span> ${k.hard_skills.filter(Boolean).map(esc).join(', ')}</p>`;
-        if (k.tools_software && k.tools_software.length)
-          html += `<p class="text-sm text-gray-700 mb-1"><span class="font-semibold">Tools & Software:</span> ${k.tools_software.filter(Boolean).map(esc).join(', ')}</p>`;
-        if (k.bahasa && k.bahasa.length)
-          html += `<p class="text-sm text-gray-700"><span class="font-semibold">Bahasa:</span> ${k.bahasa.filter(Boolean).map(esc).join(', ')}</p>`;
-        if (html) sections.push({ title: 'Kemampuan', html });
+        const renderChips = (items) => items.filter(Boolean).map(i=>`<span class="tag-chip">${esc(i)}</span>`).join('');
+        if (k.hard_skills?.filter(Boolean).length)
+          html += `<div style="margin-bottom:.75rem;"><p style="font-size:.75rem;font-weight:700;color:#374151;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.04em;">Hard Skills</p><div>${renderChips(k.hard_skills)}</div></div>`;
+        if (k.tools_software?.filter(Boolean).length)
+          html += `<div style="margin-bottom:.75rem;"><p style="font-size:.75rem;font-weight:700;color:#374151;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.04em;">Tools & Software</p><div>${renderChips(k.tools_software)}</div></div>`;
+        if (k.bahasa?.filter(Boolean).length)
+          html += `<div><p style="font-size:.75rem;font-weight:700;color:#374151;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.04em;">Bahasa</p><div>${renderChips(k.bahasa)}</div></div>`;
+        if (html) sections.push({ title:'Kemampuan', icon:'⚡', html });
       }
 
       sections.forEach((sec, idx) => {
-        const isOpen = idx === 0;
-        const sectionEl = document.createElement('div');
-        sectionEl.innerHTML = `
-          <button
-            onclick="toggleSection(${idx})"
-            class="w-full flex items-center justify-between px-5 py-3.5 text-left hover:bg-gray-50 transition-colors"
-            aria-expanded="${isOpen}"
-          >
-            <span class="text-sm font-semibold text-gray-800 uppercase tracking-wide">${esc(sec.title)}</span>
-            <svg id="chevron-${idx}" class="w-4 h-4 text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+        const isFirst = idx === 0;
+        const div = document.createElement('div');
+        div.style.borderBottom = '1px solid #F1F5F9';
+        div.innerHTML = `
+          <button onclick="toggleSection(${idx})" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;background:none;border:none;cursor:pointer;text-align:left;transition:background .15s;" onmouseover="this.style.background='#FAFBFF'" onmouseout="this.style.background='none'">
+            <span style="display:flex;align-items:center;gap:.6rem;font-size:.82rem;font-weight:700;color:#1E293B;text-transform:uppercase;letter-spacing:.05em;">
+              <span>${sec.icon}</span>${esc(sec.title)}
+            </span>
+            <svg id="chev-${idx}" width="16" height="16" fill="none" stroke="#94A3B8" stroke-width="2" viewBox="0 0 24 24" style="transition:transform .25s;${isFirst?'transform:rotate(180deg)':''}">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
             </svg>
           </button>
-          <div id="section-${idx}" class="accordion-content ${isOpen ? '' : 'hidden'} px-5 pb-4">
+          <div id="body-${idx}" class="accordion-body ${isFirst?'open':''}" style="padding:${isFirst?'0 1.5rem 1.25rem':'0 1.5rem 0'};">
             ${sec.html}
           </div>
         `;
-        container.appendChild(sectionEl);
+        box.appendChild(div);
       });
     }
 
     function toggleSection(idx) {
-      const content = document.getElementById(`section-${idx}`);
-      const chevron = document.getElementById(`chevron-${idx}`);
-      content.classList.toggle('hidden');
-      chevron.classList.toggle('rotate-180');
+      const body  = document.getElementById('body-' + idx);
+      const chev  = document.getElementById('chev-' + idx);
+      const isOpen = body.classList.contains('open');
+      body.classList.toggle('open', !isOpen);
+      body.style.padding = isOpen ? '0 1.5rem 0' : '0 1.5rem 1.25rem';
+      chev.style.transform = isOpen ? '' : 'rotate(180deg)';
     }
 
     function toggleAllSections() {
-      allSectionsOpen = !allSectionsOpen;
-      const container = document.getElementById('previewContainer');
-      const sectionCount = container.querySelectorAll('[id^="section-"]').length;
-      for (let i = 0; i < sectionCount; i++) {
-        const content = document.getElementById(`section-${i}`);
-        const chevron = document.getElementById(`chevron-${i}`);
-        if (allSectionsOpen) {
-          content.classList.remove('hidden');
-          chevron.classList.add('rotate-180');
-        } else {
-          content.classList.add('hidden');
-          chevron.classList.remove('rotate-180');
-        }
+      allOpen = !allOpen;
+      const box = document.getElementById('previewContainer');
+      const count = box.querySelectorAll('[id^="body-"]').length;
+      document.getElementById('toggleAllBtn').textContent = allOpen ? 'Tutup Semua' : 'Buka Semua';
+      for (let i = 0; i < count; i++) {
+        const body = document.getElementById('body-' + i);
+        const chev = document.getElementById('chev-' + i);
+        body.classList.toggle('open', allOpen);
+        body.style.padding = allOpen ? '0 1.5rem 1.25rem' : '0 1.5rem 0';
+        chev.style.transform = allOpen ? 'rotate(180deg)' : '';
       }
     }
 
-    function esc(str) {
-      if (!str) return '';
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
+    function esc(s) {
+      if (!s) return '';
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
 
-    // ─── Download ─────────────────────────────────────────────────
+    // ── Download ───────────────────────────────────────────────────
     function downloadDocx() {
       if (!currentDocxB64 || !currentFilename) return;
-      const byteChars = atob(currentDocxB64);
-      const byteArr = new Uint8Array(byteChars.length);
-      for (let i = 0; i < byteChars.length; i++) byteArr[i] = byteChars.charCodeAt(i);
-      const blob = new Blob([byteArr], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = currentFilename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
+      const bytes = atob(currentDocxB64);
+      const arr = new Uint8Array(bytes.length);
+      for (let i = 0; i < bytes.length; i++) arr[i] = bytes.charCodeAt(i);
+      const blob = new Blob([arr], { type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href = url; a.download = currentFilename;
+      document.body.appendChild(a); a.click();
+      document.body.removeChild(a); URL.revokeObjectURL(url);
     }
   </script>
 </body>
